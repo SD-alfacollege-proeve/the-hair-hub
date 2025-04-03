@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+    ports:
+      - "8000:80"
+      - "5173:5173"
+    environment:
+      - APACHE_DOCUMENT_ROOT=/workspace/public
+      - PHP_CLI_SERVER_WORKERS=4
+    depends_on:
+      - mariadb
+    networks:
+      - laravel
+
+  mariadb:
+    image: mariadb:11
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_USER: ${DB_USERNAME:-sail}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-password}
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    networks:
+      - laravel
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  laravel:
+    driver: bridge
+
+volumes:
+  mariadb-data:
