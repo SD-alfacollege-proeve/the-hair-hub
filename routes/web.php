@@ -14,9 +14,9 @@ Route::get('products', function () {
     return Inertia::render('Products');
 })->middleware(['auth', 'verified'])->name('products');
 
-Route::get('employees', function () {
-    return Inertia::render('Employees');
-})->middleware(['auth', 'verified'])->name('employees');
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
+});
 
 Route::get('customers', function () {
     return Inertia::render('Customers');

@@ -8,6 +8,10 @@ import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid, 
     ShoppingBasket, User, Users, Calendar, FileText, Settings, LogOut, Home } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
+import { usePage } from '@inertiajs/vue3';
+
+const { props } = usePage();
+const userRoles = props.auth.user.roles.map(role => role.name);
 
 const mainNavItems: NavItem[] = [
     {
@@ -15,25 +19,27 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    ...(userRoles.includes('admin') ? [
+        {
+            title: 'Producten',
+            href: '/products',
+            icon: ShoppingBasket,
+        },
+        {
+            title: 'Werknemers',
+            href: '/employees',
+            icon: Users,
+        },
+        {
+            title: 'Klanten',
+            href: '/customers',
+            icon: User,
+        }
+    ] : []),
     {
-        title: 'Producten',
-        href: '/products',
-        icon: ShoppingBasket,
-    },
-    {
-        title: 'Werknemers',
-        href: '/employees',
-        icon: Users,
-    },
-    {
-        title: 'Klanten',
-        href: '/customers',
-        icon: User,
-    },
-    {
-        title: 'Facturen',
-        href: '/invoices',
-        icon: FileText,
+            title: 'Facturen',
+            href: '/invoices',
+            icon: FileText,
     },
     {
         title: 'Afspraken',
