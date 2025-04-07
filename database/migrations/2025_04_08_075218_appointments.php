@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("phone_number")->unique();
             $table->dateTime("appointment_date");
             $table->foreignId("user_id")->references("id")->on("users")->constrained()->onDelete("cascade");
+            $table->foreignId("treatment_id")->references("id")->on("treatments")->constrained()->onDelete("cascade");
             $table->timestamps();
         });
     }
