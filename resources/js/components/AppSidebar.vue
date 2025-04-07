@@ -5,7 +5,8 @@ import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
+import { BookOpen, Folder, LayoutGrid, 
+    ShoppingBasket, User, Users, Calendar, FileText, Settings, LogOut, Home } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -14,6 +15,33 @@ const mainNavItems: NavItem[] = [
         href: '/dashboard',
         icon: LayoutGrid,
     },
+    {
+        title: 'Producten',
+        href: '/products',
+        icon: ShoppingBasket,
+    },
+    {
+        title: 'Werknemers',
+        href: '/employees',
+        icon: Users,
+    },
+    {
+        title: 'Klanten',
+        href: '/customers',
+        icon: User,
+    },
+    {
+        title: 'Facturen',
+        href: '/invoices',
+        icon: FileText,
+    },
+    {
+        title: 'Afspraken',
+        href: '/appointments',
+        icon: Calendar,
+    }
+    
+
 ];
 
 const footerNavItems: NavItem[] = [
@@ -31,7 +59,7 @@ const footerNavItems: NavItem[] = [
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar variant="inset">
         <SidebarHeader>
             <SidebarMenu>
                 <SidebarMenuItem>
