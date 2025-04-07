@@ -16,8 +16,9 @@ class RolePermissionSeeder extends Seeder
         // Create roles
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'user']);
+        Role::create(['name'=> 'employee']);
 
         $user = User::find(1); // Example user with ID 1
-        $user->assignRole('admin');
+        //$user->assignRole('admin');
     }
 }
