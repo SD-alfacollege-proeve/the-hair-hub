@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("name");
             $table->text("description")->nullable();
             $table->longText("thumbnail")->nullable();
-            $table->float("treatment_time", 8,2);
+            $table->float("duration", 8,2);
             $table->timestamps();
         });
     }
