@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("customer_name");
             $table->string("email")->unique();
-            $table->int("phone_number")->unique();
+            $table->integer("phone_number")->unique();
             $table->dateTime("appointment_date");
             $table->foreignId("user_id")->references("id")->on("users")->constrained()->onDelete("cascade");
             $table->timestamps();

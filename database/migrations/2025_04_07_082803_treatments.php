@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('treatments', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->char("description", 2000);
-            $table->char("thumbnail", 2083);
-            $table->time("treatment_time");
+            $table->text("description")->nullable();
+            $table->longText("thumbnail")->nullable();
+            $table->float("treatment_time", 8,2);
             $table->timestamps();
         });
     }
