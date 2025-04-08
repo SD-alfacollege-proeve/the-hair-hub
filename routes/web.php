@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,7 +17,8 @@ Route::get('products', function () {
 })->middleware(['auth', 'verified'])->name('products');
 
 Route::group(['middleware' => ['auth', 'verified']], function () {
-    Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
+    Route::get('employees', [EmployeeController::class, 'index'])->name('employees');
+    Route::resource('appointments', AppointmentController::class);
 });
 
 Route::get('customers', function () {
@@ -25,10 +28,6 @@ Route::get('customers', function () {
 Route::get('invoices', function () {
     return Inertia::render('Invoices');
 })->middleware(['auth', 'verified'])->name('invoices');
-
-Route::get('appointments', function () {
-    return Inertia::render('Appointments');
-})->middleware(['auth', 'verified'])->name('appointments');
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
