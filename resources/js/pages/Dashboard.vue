@@ -13,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const isAdmin = ref(true);
-const isEmployee = ref(false);
+const isEmployee = ref(false); 
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const isEmployee = ref(false);
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div class="border-sidebar-border/70 relative aspect-video overflow-hidden rounded-xl border">
                     <div>
-                        <div class="relative z-100">
+                        <div class="relative">
                             <div v-if="isEmployee">Welkom, werknemer!</div>
 
                             <div v-else-if="isAdmin">Welkom, admin!</div>
