@@ -13,7 +13,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const isAdmin = ref(true);
-const isEmployee = ref(false); 
+const isEmployee = ref(false);
 </script>
 
 <template>
