@@ -76,14 +76,16 @@ const products = [
                             The Hair Hub
                             <span class="absolute bottom-0 left-0 h-0.5 w-12 bg-purple-700"></span>
                         </h3>
-                        <p class="mb-2">Openingstijden</p>
-                        <p class="mb-1">Ma: 9:00 - 18:00</p>
-                        <p class="mb-1">Di: 9:00 - 18:00</p>
-                        <p class="mb-1">Wo: 9:00 - 18:00</p>
-                        <p class="mb-1">Do: 9:00 - 18:00</p>
-                        <p class="mb-1">Vr: 9:00 - 18:00</p>
-                        <p class="mb-1">Za: 10:00 - 16:00</p>
-                        <p class="mb-1">Zo: Gesloten</p>
+                        <table>
+                          <p class="mb-2">Openingstijden</p>
+                          <tr><td style="padding-right: 10px;">Ma:</td><td>9:00 - 18:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Di:</td><td>9:00 - 18:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Wo:</td><td>9:00 - 18:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Do:</td><td>9:00 - 18:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Vr:</td><td>9:00 - 18:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Za:</td><td>10:00 - 16:00</td></tr>
+                          <tr><td style="padding-right: 10px;">Zo:</td><td>Gesloten</td></tr>
+                        </table>
                     </div>
 
                     <!-- Column 2 -->
