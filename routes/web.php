@@ -18,6 +18,14 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
 });
 
+Route::get('/store', function (){
+    return Inertia::render('Store');
+})->name('store');
+
+Route::get('/privacybeleid', function (){
+    return Inertia::render('Privacybeleid');
+})->name('privacybeleid');
+
 Route::get('customers', function () {
     return Inertia::render('Customers');
 })->middleware(['auth', 'verified'])->name('customers');
