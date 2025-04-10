@@ -82,8 +82,8 @@ import { Head, Link } from '@inertiajs/vue3';
                             <span class="absolute bottom-0 left-0 h-0.5 w-12 bg-purple-700"></span>
                         </h3>
                         <ul class="space-y-2">
-                            <li><Link href="#" class="text-gray-300 hover:text-blue-500">Producten</Link></li>
-                            <li><Link href="#" class="text-gray-300 hover:text-blue-500">Privacy Beleid</Link></li>
+                            <li><Link :href="route('store')" class="text-gray-300 hover:text-blue-500">Producten</Link></li>
+                            <li><Link :href="route('privacybeleid')" class="text-gray-300 hover:text-blue-500">Privacy Beleid</Link></li>
                             <li><Link href="#" class="text-gray-300 hover:text-blue-500">Cookies</Link></li>
                             <li><Link href="#" class="text-gray-300 hover:text-blue-500">Contact</Link></li>
                         </ul>

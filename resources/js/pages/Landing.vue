@@ -20,7 +20,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <h1 class="mb-4 text-5xl font-bold">The Hair Hub</h1>
                     <p class="mx-auto mb-8 max-w-2xl text-xl">Jouw bestemming voor professionele haarverzorging en styling in een ontspannen sfeer</p>
                     <div class="flex flex-col justify-center gap-4 sm:flex-row">
-                        <Link href="#" class="rounded border-2 border-white px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10">
+                        <Link href="#about" class="rounded border-2 border-white px-6 py-3 font-semibold text-white transition-colors hover:bg-white/10">
                             Over Ons
                         </Link>
                         <Link
@@ -89,7 +89,7 @@ import { Head, Link } from '@inertiajs/vue3';
             </section>
 
             <!-- About Section -->
-            <section class="container mx-auto px-4 py-16">
+            <section id="about" class="container mx-auto px-4 py-16">
                 <div class="grid items-center gap-8 md:grid-cols-2">
                     <div>
                         <h2 class="relative mb-4 pb-2 text-3xl font-bold">
