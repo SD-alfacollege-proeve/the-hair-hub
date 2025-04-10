@@ -1,72 +1,35 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-
-const products = [
-  {
-    id: 1,
-    name: 'Shampoo',
-    description: 'Hydraterende shampoo.',
-    price: 9.99,
-    image: '/images/shampoo.jpg'
-  },
-  {
-    id: 2,
-    name: 'Haarverf',
-    description: 'Langhoudende haarkleuring.',
-    price: 14.95,
-    image: '/images/hairdye.jpg'
-  },
-  {
-    id: 3,
-    name: 'Conditioner',
-    description: 'Geeft je haar meer volume.',
-    price: 11.49,
-    image: '/images/conditioner.jpg'
-  }
-];
 </script>
 
 <template>
-  <Head title="Producten - Haircare shop">
-    <link rel="preconnect" href="https://rsms.me/" />
-    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-  </Head>
+    <Head title="The Hair Hub - Professionele Kapsalon">
+        <link rel="preconnect" href="https://rsms.me/" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    </Head>
 
-  <div class="min-h-screen bg-white text-gray-800">
-    <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white shadow-sm">
-      <div class="container mx-auto flex items-center justify-between px-4 py-2">
-        <div class="flex items-center">
-          <img src="/images/logo.png" alt="The Hair Hub Logo" class="h-12 w-12 rounded-full object-contain" />
-        </div>
+    <div class="min-h-screen bg-gray-50 text-gray-900">
+        <!-- Header -->
+        <header class="sticky top-0 z-50 bg-white shadow-sm">
+            <div class="container mx-auto flex items-center justify-between px-4 py-2">
+                <div class="flex items-center">
+                    <img src="/images/logo.png" alt="The Hair Hub Logo" class="h-12 w-12 rounded-full object-contain" />
+                </div>
 
-        <nav class="hidden items-center gap-6 md:flex">
-          <Link href="/" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Home</Link>
-          <Link href="/producten" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Producten</Link>
-        </nav>
+                <nav class="hidden items-center gap-6 md:flex">
+                    <Link href="#" class="font-medium text-gray-800 transition-colors hover:text-purple-700"> Home </Link>
+                    <Link href="/producten" class="font-medium text-gray-800 transition-colors hover:text-purple-700"> Producten </Link>
+                </nav>
 
-        <Link href="#" class="rounded bg-blue-700 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800">
-          Afspraak maken
-        </Link>
-      </div>
-    </header>
+                <Link href="#" class="rounded bg-blue-700 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800">
+                    Afspraak Maken
+                </Link>
+            </div>
+        </header>
 
-    <!-- Products -->
-    <section class="container mx-auto px-4 py-16">
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        <div v-for="product in products" :key="product.id" class="overflow-hidden rounded-lg bg-white shadow-md transition-transform hover:-translate-y-1">
-          <img :src="product.image" :alt="product.name" class="h-52 w-full object-cover transition-transform hover:scale-105" />
-          <div class="p-4">
-            <h3 class="mb-2 text-xl font-semibold text-gray-800">{{ product.name }}</h3>
-            <p class="text-gray-600">{{ product.description }}</p>
-            <p class="mt-4 text-blue-600 font-bold">€{{ product.price }}</p>
-            <button class="mt-4 bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Toevoegen</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-     <!-- Footer -->
+    <!-- privacybeleid -->
+     
+         <!-- Footer -->
      <footer class="bg-gray-800 pt-12 pb-6 text-white">
             <div class="container mx-auto px-4">
                 <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -137,5 +100,5 @@ const products = [
                 </div>
             </div>
         </footer>
-  </div>
+     </div>
 </template>
