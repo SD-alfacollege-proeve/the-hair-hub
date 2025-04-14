@@ -26,6 +26,10 @@ Route::get('/privacybeleid', function (){
     return Inertia::render('Privacybeleid');
 })->name('privacybeleid');
 
+Route::get('/cookiebeleid', function (){
+    return Inertia::render('Cookiebeleid');
+})->name('cookiebeleid');
+
 Route::get('customers', function () {
     return Inertia::render('Customers');
 })->middleware(['auth', 'verified'])->name('customers');
