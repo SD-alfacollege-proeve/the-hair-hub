@@ -42,6 +42,8 @@ const resetVelden = () => {
   stap.value = 1;
 };
 
+const huidigeDatum = new Date().toISOString().split('T')[0];
+
 // Simuleer afspraak
 const submitAfspraak = () => {
   alert('Afspraak succesvol ingepland!');
@@ -93,6 +95,7 @@ const submitAfspraak = () => {
               id="datum"
               class="w-full p-3 border border-gray-300 rounded-md"
               required
+              :min="huidigeDatum"
             />
           </div>
 
@@ -133,7 +136,7 @@ const submitAfspraak = () => {
               @click="submitAfspraak"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
-              Maak Afspraak
+              Maak afspraak
             </button>
           </div>
         </div>

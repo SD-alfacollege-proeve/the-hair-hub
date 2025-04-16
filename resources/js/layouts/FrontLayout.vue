@@ -18,6 +18,7 @@ import { Head, Link } from '@inertiajs/vue3';
                 <nav class="hidden items-center gap-6 md:flex">
                     <Link href="/" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Home</Link>
                     <Link :href="route('store')" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Producten</Link>
+                    <Link :href="route('contact')" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Contact</Link>
                 </nav>
                 <Link :href="route('afspraken')" class="rounded bg-blue-700 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800">
                     Afspraak maken

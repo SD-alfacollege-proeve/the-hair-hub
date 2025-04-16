@@ -24,7 +24,7 @@ import { Head, Link } from '@inertiajs/vue3';
                             Over Ons
                         </Link>
                         <Link
-                            href="#"
+                            :href="route('afspraken')"
                             class="rounded border-2 border-blue-700 bg-blue-700 px-6 py-3 font-semibold text-white transition-colors hover:border-blue-800 hover:bg-blue-800"
                         >
                             Afspraak Maken
