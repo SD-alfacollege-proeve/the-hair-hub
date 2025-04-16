@@ -62,7 +62,7 @@ import { Head } from '@inertiajs/vue3';
                     <div>
                         <h3 class="text-xl font-semibold text-purple-700 mb-2">Jouw rechten</h3>
                         <p>Je hebt recht op inzage, correctie of verwijdering van jouw gegevens. Ook kun je bezwaar maken tegen verwerking of vragen om overdracht van je gegevens.</p>
-                        <p class="mt-2">Stuur hiervoor een e-mail naar <a href="mailto:info@thehairhub.nl" class="text-purple-700 underline">info@thehairhub.nl</a>.</p>
+                        <p class="mt-2">Stuur hiervoor een e-mail naar <a href="mailto:contact@example.com" class="text-purple-700 underline">contact@example.com</a>.</p>
                     </div>
 
                     <div>
