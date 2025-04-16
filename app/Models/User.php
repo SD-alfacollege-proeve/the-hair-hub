@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,18 +48,17 @@ class User extends Authenticatable
     }
 
     public function getIsAdminAttribute(): bool
-{
-    return $this->hasRole('admin');
-}
+    {
+        return $this->hasRole('admin');
+    }
 
-public function getIsEmployeeAttribute(): bool
-{
-    return $this->hasRole('employee');
-}
+    public function getIsEmployeeAttribute(): bool
+    {
+        return $this->hasRole('employee');
+    }
 
-public function getIsUserAttribute(): bool
-{
-    return $this->hasRole('user');
-}
-
+    public function getIsUserAttribute(): bool
+    {
+        return $this->hasRole('user');
+    }
 }

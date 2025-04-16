@@ -15,13 +15,13 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-    
+
         if ($user->isAdmin || $user->isEmployee) {
             return Inertia::render('employees/Overview', [
                 'employees' => User::role('employee')->get(),
             ]);
         }
-    
+
         abort(403, 'Unauthorized');
     }
 
@@ -44,10 +44,7 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
-    {
-
-    }
+    public function show(User $user) {}
 
     /**
      * Show the form for editing the specified resource.

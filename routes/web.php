@@ -18,19 +18,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
 });
 
-Route::get('/store', function (){
+Route::get('/store', function () {
     return Inertia::render('Store');
 })->name('store');
 
-Route::get('/privacybeleid', function (){
+Route::get('/privacybeleid', function () {
     return Inertia::render('Privacybeleid');
 })->name('privacybeleid');
 
-Route::get('/contact', function (){
+Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
 
-Route::get('/cookiebeleid', function (){
+Route::get('/cookiebeleid', function () {
     return Inertia::render('Cookiebeleid');
 })->name('cookiebeleid');
 
