@@ -50,7 +50,7 @@ import { Head } from '@inertiajs/vue3';
                         <h3 class="text-xl font-semibold text-purple-700 mb-2">Contact</h3>
                         <p>
                             Heb je vragen over ons cookiegebruik?<br>
-                            Neem contact met ons op via <a href="mailto:info@thehairhub.nl" class="text-purple-700 underline">info@thehairhub.nl</a>.
+                            Neem contact met ons op via <a href="mailto:contact@example.com" class="text-purple-700 underline">contact@example.com</a>.
                         </p>
                     </div>
                 </div>
