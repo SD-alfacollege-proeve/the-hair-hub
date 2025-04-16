@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->string("customer_name");
-            $table->string("email")->unique();
-            $table->integer("phone_number")->unique();
-            $table->dateTime("appointment_date");
-            $table->foreignId("user_id")->references("id")->on("users")->constrained()->onDelete("cascade");
-            $table->foreignId("treatment_id")->references("id")->on("treatments")->constrained()->onDelete("cascade");
+            $table->string('customer_name');
+            $table->string('email')->unique();
+            $table->integer('phone_number')->unique();
+            $table->dateTime('appointment_date');
+            $table->foreignId('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');
+            $table->foreignId('treatment_id')->references('id')->on('treatments')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,21 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Workhours extends Model
 {
     protected $fillable = [
-        "user_id",
-        "date",
-        "worked_hours"
-    ]
+        'user_id',
+        'date',
+        'worked_hours',
+    ];
 
-    protected $hidden = [
-
-    ]
-
-    public function user(){
+    public function user()
+    {
         return $this->hasOne(User::class);
     }
 }
