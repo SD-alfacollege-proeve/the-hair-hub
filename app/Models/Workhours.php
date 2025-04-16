@@ -17,7 +17,7 @@ class Workhours extends Model
 
     ]
 
-    public function users(){
+    public function user(){
         return $this->hasOne(User::class);
     }
 }

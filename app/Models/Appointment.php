@@ -20,11 +20,11 @@ class Appointment extends Model
 
     ]
 
-    public function users(){
+    public function user(){
         return $this->hasOne(User::class);
     }
 
-    public function treatments(){
+    public function treatment(){
         return $this->hasOne(Treatment::class);
     }
 }
