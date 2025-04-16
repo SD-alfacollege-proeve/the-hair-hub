@@ -19,7 +19,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <Link href="/" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Home</Link>
                     <Link :href="route('store')" class="font-medium text-gray-800 transition-colors hover:text-purple-700">Producten</Link>
                 </nav>
-                <Link href="#" class="rounded bg-blue-700 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800">
+                <Link :href="route('afspraken')" class="rounded bg-blue-700 px-5 py-1.5 font-semibold text-white transition-colors hover:bg-blue-800">
                     Afspraak maken
                 </Link>
             </div>

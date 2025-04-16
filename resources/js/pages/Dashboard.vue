@@ -36,6 +36,8 @@ const isRole = (role: 'admin' | 'employee' | 'user') => {
                             <div v-if="isRole('employee')">Welkom, werknemer!</div>
 
                             <div v-else-if="isRole('admin')">Welkom, admin!</div>
+
+                            <div v-else-if="isRole('user')">Welkom, gebruiker!</div>
                         </div>
                     </div>
                 </div>
