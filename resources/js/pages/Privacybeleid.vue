@@ -69,7 +69,7 @@ import { Head } from '@inertiajs/vue3';
                         <h3 class="text-xl font-semibold text-purple-700 mb-2">Contactgegevens</h3>
                         <p>
                             <strong>The Hair Hub</strong><br>
-                            E-mail: <a href="mailto:info@thehairhub.nl" class="text-purple-700 underline">info@thehairhub.nl</a><br>
+                            E-mail: <a href="mailto:contact@example.com" class="text-purple-700 underline">contact@example.com</a><br>
                             Adres: Boumaboulevard 1 - 1234 AB<br>
                             KvK: 123456
                         </p>
