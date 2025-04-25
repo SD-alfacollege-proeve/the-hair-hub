@@ -34,6 +34,10 @@ Route::get('/cookiebeleid', function () {
     return Inertia::render('Cookiebeleid');
 })->name('cookiebeleid');
 
+Route::get('/afspraken', function () {
+    return Inertia::render('Afspraken');
+})->name('afspraken');
+
 Route::get('customers', function () {
     return Inertia::render('Customers');
 })->middleware(['auth', 'verified'])->name('customers');

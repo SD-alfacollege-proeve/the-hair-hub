@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 
@@ -12,8 +12,16 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const isAdmin = ref(true);
-const isEmployee = ref(false);
+const page = usePage<{
+    auth: {
+        roles: ('admin' | 'employee' | 'user')[];
+    }
+}>();
+
+const isRole = (role: 'admin' | 'employee' | 'user') => {
+    return page.props.auth?.roles?.includes(role);
+};
+
 </script>
 
 <template>
@@ -25,9 +33,11 @@ const isEmployee = ref(false);
                 <div class="border-sidebar-border/70 relative aspect-video overflow-hidden rounded-xl border">
                     <div>
                         <div class="relative">
-                            <div v-if="isEmployee">Welkom, werknemer!</div>
+                            <div v-if="isRole('employee')">Welkom, werknemer!</div>
 
-                            <div v-else-if="isAdmin">Welkom, admin!</div>
+                            <div v-else-if="isRole('admin')">Welkom, admin!</div>
+
+                            <div v-else-if="isRole('user')">Welkom, gebruiker!</div>
                         </div>
                     </div>
                 </div>
