@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->foreignId('treatment_id')->references('id')->on('treatments')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->string('token')->unique()->nullable();
         });
     }
 
