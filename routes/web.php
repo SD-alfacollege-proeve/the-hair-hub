@@ -30,6 +30,16 @@ Route::get('/store', function () {
     return Inertia::render('Store');
 })->name('store');
 
+
+Route::get('/afspraakbewerken', function () {
+    return Inertia::render('Afspraakbewerken');
+})->name('afspraakbewerken');
+
+
+Route::get('/klantafspraak', function () {
+    return Inertia::render('Klantafspraak');
+})->name('klantafspraak');
+
 Route::get('/privacybeleid', function () {
     return Inertia::render('Privacybeleid');
 })->name('privacybeleid');
