@@ -2,27 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Product;
 use Inertia\Inertia;
-
-class EmployeeController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = Auth::user();
-
-        if ($user->isAdmin || $user->isEmployee) {
-            return Inertia::render('employees/Overview', [
-                'employees' => User::role('employee')->get(),
-            ]);
-        }
-
-        abort(403, 'Unauthorized');
+        return Inertia::render('Products', [
+            'products' => Product::all(),
+        ]);
     }
 
     /**
@@ -33,7 +25,6 @@ class EmployeeController extends Controller
         //
     }
 
-    
     /**
      * Store a newly created resource in storage.
      */
@@ -45,12 +36,15 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user) {}
+    public function show(string $id)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(string $id)
     {
         //
     }
@@ -58,7 +52,7 @@ class EmployeeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -66,7 +60,7 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
         //
     }
