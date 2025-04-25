@@ -11,7 +11,7 @@ const datum = ref('');
 const tijd = ref('');
 
 const werknemers = ref(['Lisa', 'Emma', 'Joost']);
-const behandelingen = ref(['Knippen', 'Knippen en baard', 'Knippen en kleuren']);
+const behandelingen = ref(['Knippen', 'Stylen', 'Wassen']);
 
 const isStap1Voltooid = computed(() => werknemer.value !== '');
 const isStap2Voltooid = computed(() => behandeling.value !== '');
@@ -41,6 +41,9 @@ const resetVelden = () => {
   tijd.value = '';
   stap.value = 1;
 };
+
+const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17',]);
+
 
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
@@ -91,6 +94,7 @@ const submitAfspraak = () => {
             <label for="datum" class="block text-sm font-semibold text-gray-700">Kies een datum</label>
             <input
               v-model="datum"
+              name="date"
               type="date"
               id="datum"
               class="w-full p-3 border border-gray-300 rounded-md"
@@ -102,13 +106,9 @@ const submitAfspraak = () => {
           <!-- Tijd kiezen -->
           <div v-if="stap === 4">
             <label for="tijd" class="block text-sm font-semibold text-gray-700">Kies een tijd</label>
-            <input
-              v-model="tijd"
-              type="time"
-              id="tijd"
-              class="w-full p-3 border border-gray-300 rounded-md"
-              required
-            />
+            <select v-model="tijd" id="tijd" name="time" class="w-full p-3 border border-gray-300 rounded-md" required>
+              <option v-for="uur in uren" :key="uur" :value="uur">{{ uur }}:00</option>
+            </select>
           </div>
 
           <!-- Navigatie -->

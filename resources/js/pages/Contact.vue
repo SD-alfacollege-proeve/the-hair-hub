@@ -37,7 +37,7 @@ const handleSubmit = () => {
                 <div class="grid items-center gap-20 md:grid-cols-2 ">
   
                     <div class="overflow-hidden rounded-lg shadow-lg">
-                        <img src="/images/about.jpg" alt="The Hair Hub Salon" class="h-auto w-full" />
+                        <img src="/images/knippen.jpg" alt="The Hair Hub Salon" class="h-auto w-full" />
                     </div>
 
                     <div class="mt-10">

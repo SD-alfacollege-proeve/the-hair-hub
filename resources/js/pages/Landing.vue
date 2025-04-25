@@ -14,7 +14,7 @@ import { Head, Link } from '@inertiajs/vue3';
             <!-- Hero Section -->
             <section class="relative overflow-hidden bg-gray-900 text-white">
                 <!-- Hero background image as an actual image element -->
-                <img src="/images/hero.jpg" alt="Hero background" class="absolute inset-0 z-0 h-full w-full object-cover" />
+                <img src="/images/header.jpg" alt="Hero background" class="absolute inset-0 z-0 h-full w-full object-cover" />
                 <div class="absolute inset-0 z-10 bg-black opacity-60"></div>
                 <div class="relative z-20 container mx-auto px-4 py-20 text-center">
                     <h1 class="mb-4 text-5xl font-bold">The Hair Hub</h1>
@@ -36,11 +36,11 @@ import { Head, Link } from '@inertiajs/vue3';
             <!-- Services Section -->
             <section class="container mx-auto px-4 py-16">
                 <h2 class="relative mb-4 pb-2 text-3xl font-bold">
-                    Mannenkapsels
+                    Behandelingen
                     <span class="absolute bottom-0 left-0 h-1 w-24 bg-purple-700"></span>
                 </h2>
                 <p class="mb-10 max-w-3xl text-lg text-gray-600">
-                    Bij The Hair Hub bieden we een breed scala aan herenkapsel services, van klassiek tot modern. Onze ervaren stylisten zorgen ervoor
+                    Bij The Hair Hub bieden we een breed scala van behandelingen aan, van klassiek tot modern. Onze ervaren stylisten zorgen ervoor
                     dat je met een perfect kapsel de deur uitgaat.
                 </p>
 
@@ -49,14 +49,14 @@ import { Head, Link } from '@inertiajs/vue3';
                     <div class="overflow-hidden rounded-lg bg-white shadow-md transition-transform hover:-translate-y-1">
                         <div class="h-52 overflow-hidden">
                             <img
-                                src="/images/man1.jpg"
-                                alt="Klassieke herenkapsel"
+                                src="/images/knippen.jpg"
+                                alt="Knippen"
                                 class="h-full w-full object-cover transition-transform hover:scale-105"
                             />
                         </div>
                         <div class="p-4">
-                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Klassieke Kapsels</h3>
-                            <p class="text-gray-600">Tijdloze en elegante kapsels voor de moderne heer. Perfect voor elke gelegenheid.</p>
+                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Knippen</h3>
+                            <p class="text-gray-600"></p>
                         </div>
                     </div>
 
@@ -64,25 +64,25 @@ import { Head, Link } from '@inertiajs/vue3';
                     <div class="overflow-hidden rounded-lg bg-white shadow-md transition-transform hover:-translate-y-1">
                         <div class="h-52 overflow-hidden">
                             <img
-                                src="/images/man2.jpg"
-                                alt="Moderne herenkapsel"
+                                src="/images/stylen2.jpg"
+                                alt="Stylen"
                                 class="h-full w-full object-cover transition-transform hover:scale-105"
                             />
                         </div>
                         <div class="p-4">
-                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Moderne Styles</h3>
-                            <p class="text-gray-600">Trendy en eigentijdse kapsels die jouw persoonlijkheid perfect weergeven.</p>
+                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Stylen</h3>
+                            <p class="text-gray-600">Trendy en eigentijdse kapsels stylen.</p>
                         </div>
                     </div>
 
                     <!-- Service Card 3 -->
                     <div class="overflow-hidden rounded-lg bg-white shadow-md transition-transform hover:-translate-y-1">
                         <div class="h-52 overflow-hidden">
-                            <img src="/images/man3.jpg" alt="Baard trimmen" class="h-full w-full object-cover transition-transform hover:scale-105" />
+                            <img src="/images/wassen.jpg" alt="Baard trimmen" class="h-full w-full object-cover transition-transform hover:scale-105" />
                         </div>
                         <div class="p-4">
-                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Baard Styling</h3>
-                            <p class="text-gray-600">Professionele baard trimming en styling om je look compleet te maken.</p>
+                            <h3 class="mb-2 text-xl font-semibold text-gray-800">Wassen</h3>
+                            <p class="text-gray-600">Wassen van uw haren kan hier ook.</p>
                         </div>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     </div>
 
                     <div class="overflow-hidden rounded-lg shadow-lg">
-                        <img src="/images/about.jpg" alt="The Hair Hub Salon" class="h-auto w-full" />
+                        <img src="/images/stylen.jpg" alt="The Hair Hub Salon" class="h-auto w-full" />
                     </div>
                 </div>
             </section>
