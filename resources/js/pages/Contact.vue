@@ -2,24 +2,29 @@
 import { ref } from 'vue';
 import FrontLayout from '@/layouts/FrontLayout.vue';
 import { Head } from '@inertiajs/vue3';
-
+import axios from "axios";
 const name = ref('');
 const email = ref('');
 const message = ref('');
 const success = ref(false);
 
-const handleSubmit = () => {
-    console.log('Formulier verzonden:', {
-        name: name.value,
-        email: email.value,
-        message: message.value
-    });
+const handleSubmit = async () => {
+    try {
+        await axios.post('/contact/store', {
+            name: name.value,
+            email: email.value,
+            message: message.value,
+        });
 
-    success.value = true;
+        success.value = true;
 
-    name.value = '';
-    email.value = '';
-    message.value = '';
+        // Clear fields after successful submission
+        name.value = '';
+        email.value = '';
+        message.value = '';
+    } catch (error) {
+        console.error('Fout bij versturen:', error.response?.data || error.message);
+    }
 };
 </script>
 

@@ -4,6 +4,7 @@ import { Head, Link } from '@inertiajs/vue3';
 
 <template>
     <Head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>

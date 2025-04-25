@@ -2,6 +2,7 @@
 import FrontLayout from '@/layouts/FrontLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
+import axios from "axios"
 
 // Stap- en formulierbeheer
 const stap = ref(1); 
@@ -35,11 +36,18 @@ const vorigeStap = () => {
 };
 
 const resetVelden = () => {
+   console.log({
+  user_id: werknemer.key,
+  treatment_id: behandeling.key,
+  date: datum.value,
+  time: tijd.value,
+});
   werknemer.value = '';
   behandeling.value = '';
   datum.value = '';
   tijd.value = '';
   stap.value = 1;
+ 
 };
 
 const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17',]);
@@ -48,11 +56,27 @@ const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17',]);
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
 // Simuleer afspraak
-const submitAfspraak = () => {
-  alert('Afspraak succesvol ingepland!');
+const submitAfspraak = async () => {
+  try {
+    await axios.post("/afspraken/create", {
+      user_id: 2,
+      treatment_id: 3,
+      date: datum.value,
+      time: tijd.value,
+    });
+
+    // Optional: Show success feedback here
+  } catch (err) {
+  if (err.response?.status === 422) {
+    console.error('Validatiefouten:', err.response.data.errors);
+  } else {
+    console.error(err);
+  }
+}
 
   resetVelden();
 };
+
 </script>
 
 <template>
@@ -133,7 +157,7 @@ const submitAfspraak = () => {
             <!-- afspraak maken -->
             <button
               v-if="stap === 4"
-              @click="submitAfspraak"
+              @click="submitAfspraak()"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
               Maak afspraak
