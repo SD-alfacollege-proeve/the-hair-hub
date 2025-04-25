@@ -35,13 +35,15 @@ const mainNavItems: NavItem[] = [
                   href: '/customers',
                   icon: User,
               },
+
+              {
+                title: 'Facturen',
+                href: '/invoices',
+                icon: FileText,
+              },
           ]
         : []),
-    {
-        title: 'Facturen',
-        href: '/invoices',
-        icon: FileText,
-    },
+
     {
         title: 'Afspraken',
         href: '/appointments',
