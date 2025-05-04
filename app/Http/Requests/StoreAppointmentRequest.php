@@ -24,10 +24,11 @@ class StoreAppointmentRequest extends FormRequest
         return [
             "customer_name" => ["required", "string", "min:3", "max:100"],
             "email" => ["required", "max:100", "email"],
-            "phone_number" => 'required|dutch-phone-number',
+            "phone_number" => 'required',
             "date" => "required",
             "time" => "required",
-            "treatment_id"
+            "user_id" => "required",
+            "treatment_id" => "required"
         ];
     }
 

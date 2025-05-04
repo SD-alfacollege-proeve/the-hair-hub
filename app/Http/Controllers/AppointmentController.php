@@ -9,6 +9,7 @@ use App\Http\Requests\StoreAppointmentRequest;
 use App\Mail\SendAppointmentConfirmationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -40,13 +41,12 @@ class AppointmentController extends Controller
      */
     public function storeAppointment(StoreAppointmentRequest $request)
     {
-        
         $appointment = new Appointment();
         $appointment->customer_name = $request->customer_name;
         $appointment->email = $request->email;
         $appointment->phone_number = $request->phone_number;
         $appointment->treatment_id = $request->treatment_id;
-        $appointment->datetime = $request->date . ' ' . $request->time;
+        $appointment->created_at = Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time);
 
         
         $appointment->save();

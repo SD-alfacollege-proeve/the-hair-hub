@@ -6,16 +6,25 @@ import axios from "axios"
 
 // Stap- en formulierbeheer
 const stap = ref(1); 
-const werknemer = ref('');
-const behandeling = ref('');
+const werknemer = ref<number | null>(null);
+const behandeling = ref<number | null>(null);
 const datum = ref('');
-const tijd = ref('');
+const uren = ref(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']);
 
-const werknemers = ref(['Lisa', 'Emma', 'Joost']);
-const behandelingen = ref(['Knippen', 'Stylen', 'Wassen']);
+const werknemers = ref([
+  {id: 1, name: "joost"},
+  {id:2, name: "emma"},
+  {id:3, name: "lisa"}
+]
+);
+const behandelingen = ref([
+  {id:1, name: 'Knippen'},
+  {id:2, name: 'Stylen'},
+  {id:3, name: 'Wassen'}
+  ]);
 
-const isStap1Voltooid = computed(() => werknemer.value !== '');
-const isStap2Voltooid = computed(() => behandeling.value !== '');
+const isStap1Voltooid = computed(() => werknemer.value !== null);
+const isStap2Voltooid = computed(() => behandeling.value !== null);
 const isStap3Voltooid = computed(() => datum.value !== '');
 const isStap4Voltooid = computed(() => tijd.value !== '');
 
@@ -64,11 +73,33 @@ const resetVelden = () => {
  
 };
 
-const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17']);
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
+async function submitAfspraak() {
+  if (!isSubmitEnabled.value) return;
 
-};
+  try {
+    await axios.post("/afspraken/create", {
+      user_id: werknemer.value,
+      treatment_id: behandeling.value,
+      date: datum.value,
+      time: tijd.value,
+      customer_name: naam.value,
+      email: email.value,
+      phone_number: telefoon.value,
+    });
+
+    // Reset after successful post
+    resetVelden();
+  } catch (err: any) {
+    console.error("Fout bij verzenden:", err.response?.data || err.message);
+  }
+}
+
+  
+
+
+
 
 </script>
 
@@ -94,7 +125,7 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
           <div v-if="stap === 1">
             <label for="werknemer" class="block text-sm font-semibold text-gray-700">Kies een werknemer</label>
             <select v-model="werknemer" id="werknemer" class="w-full p-3 border border-gray-300 rounded-md">
-              <option v-for="werknemer in werknemers" :key="werknemer" :value="werknemer">{{ werknemer }}</option>
+              <option v-for="werknemer in werknemers" :key="werknemer.id" :value="werknemer.id">{{ werknemer.name }}</option>
             </select>
           </div>
 
@@ -102,7 +133,7 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
           <div v-if="stap === 2">
             <label for="behandeling" class="block text-sm font-semibold text-gray-700">Kies een behandeling</label>
             <select v-model="behandeling" id="behandeling" class="w-full p-3 border border-gray-300 rounded-md">
-              <option v-for="behandeling in behandelingen" :key="behandeling" :value="behandeling">{{ behandeling }}</option>
+              <option v-for="behandeling in behandelingen" :key="behandeling.id" :value="behandeling.id">{{ behandeling.name }}</option>
             </select>
           </div>
 
@@ -124,7 +155,7 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
           <div v-if="stap === 4">
             <label for="tijd" class="block text-sm font-semibold text-gray-700">Kies een tijd</label>
             <select v-model="tijd" id="tijd" name="time" class="w-full p-3 border border-gray-300 rounded-md" required>
-              <option v-for="uur in uren" :key="uur" :value="uur">{{ uur }}:00</option>
+              <option v-for="uur in uren" :key="uur" :value="uur">{{ uur }}</option>
             </select>
           </div>
 
@@ -185,7 +216,7 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
 
             <!-- afspraak maken -->
             <button
-
+              @click="submitAfspraak()"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
               Maak afspraak
