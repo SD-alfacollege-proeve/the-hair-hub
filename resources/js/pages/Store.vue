@@ -48,7 +48,7 @@ const products = [
                             <h3 class="mb-2 text-xl font-semibold text-gray-800">{{ product.name }}</h3>
                             <p class="text-gray-600">{{ product.description }}</p>
                             <p class="mt-4 font-bold text-blue-600">€{{ product.price }}</p>
-                            <button class="mt-4 rounded bg-blue-700 px-4 py-2 text-white transition hover:bg-blue-800">Toevoegen</button>
+                            <p class="mt-4 font-bold ">Bestellen en ophalen alleen mogelijk in de salon.</p>
                         </div>
                     </div>
                 </div>
