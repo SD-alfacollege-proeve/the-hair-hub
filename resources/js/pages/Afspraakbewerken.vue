@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import FrontLayout from '@/layouts/FrontLayout.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref, computed } from 'vue';
-
 const huidigeDatum = new Date().toISOString().split('T')[0];
 const datum = ref('');
 </script>

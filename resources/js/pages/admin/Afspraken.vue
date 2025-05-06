@@ -2,7 +2,6 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
 import axios from 'axios';
 
 const deleteAfspraak = async (id: number) => {
@@ -30,10 +29,6 @@ const page = usePage<{
         roles: ('admin' | 'appointment' | 'user')[];
     }
 }>();
-
-const isRole = (role: 'admin' | 'appointment' | 'user') => {
-    return page.props.auth?.roles?.includes(role);
-};
 
 </script>
 
