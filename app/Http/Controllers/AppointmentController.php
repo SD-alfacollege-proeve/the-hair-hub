@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Mail\SendAppointmentConfirmationMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentController extends Controller
 {
@@ -16,9 +17,9 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = Appointment::with("users")->get();
-        dd($appointments);
-        return Inertia::render('Appointments', [
+        $appointments = DB::table("appointments")->orderBy("appointment_date", "desc")->get();
+        
+        return Inertia::render('admin/Afspraken', [
             'appointments' => $appointments,
             
         ]);
@@ -39,6 +40,7 @@ class AppointmentController extends Controller
      */
     public function storeAppointment(StoreAppointmentRequest $request)
     {
+        
         $appointment = new Appointment();
         $appointment->customer_name = $request->customer_name;
         $appointment->email = $request->email;
@@ -93,9 +95,11 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointment $appointment)
+    public function destroy(Appointment $id)
     {
+        $appointment = Appointment::all()->findOrFail($id);
         $appointment->delete();
-        return redirect()->back();
+        
+        return response()->json(['redirect' => '/afspraken']);
     }
 }

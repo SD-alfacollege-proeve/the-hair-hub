@@ -2,6 +2,7 @@
 import FrontLayout from '@/layouts/FrontLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
+import axios from "axios"
 
 // Stap- en formulierbeheer
 const stap = ref(1); 
@@ -46,6 +47,12 @@ const vorigeStap = () => {
 };
 
 const resetVelden = () => {
+   console.log({
+  user_id: werknemer.key,
+  treatment_id: behandeling.key,
+  date: datum.value,
+  time: tijd.value,
+});
   werknemer.value = '';
   behandeling.value = '';
   datum.value = '';
@@ -54,18 +61,15 @@ const resetVelden = () => {
   email.value = '';
   telefoon.value = '';
   stap.value = 1;
+ 
 };
 
 const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17']);
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
-// Simuleer afspraak
-const submitAfspraak = () => {
-  if (isSubmitEnabled.value) {
-    alert('Afspraak succesvol ingepland!');
-    resetVelden();
-  }
+
 };
+
 </script>
 
 <template>
@@ -181,9 +185,7 @@ const submitAfspraak = () => {
 
             <!-- afspraak maken -->
             <button
-              v-if="stap === 5"
-              @click="submitAfspraak"
-              :disabled="!isSubmitEnabled"
+
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
               Maak afspraak
