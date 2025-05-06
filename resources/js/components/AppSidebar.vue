@@ -41,6 +41,11 @@ const mainNavItems: NavItem[] = [
                 href: '/invoices',
                 icon: FileText,
               },
+              {
+                title: 'Eigenaaresse',
+                href: '/owner',
+                icon: User,
+              }
           ]
         : []),
 

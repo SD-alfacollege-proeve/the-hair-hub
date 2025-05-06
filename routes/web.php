@@ -16,14 +16,13 @@ use Carbon\Carbon;
 Route::get('/', function () {
     return Inertia::render('Landing');
 })->name('home');
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('products', [ProductController::class, "index"])->name("products");
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('owner', \App\Http\Controllers\OwnerController::class)->except(['show']);
 });
 
 Route::get('/store', function () {
@@ -79,7 +78,6 @@ Route::get('invoices', function () {
 Route::get('appointments', [AppointmentController::class, "index"])->middleware(["auth", "verified"]);
 Route::delete("/afspraken/delete/{id}", [AppointmentController::class, "destroy"])->middleware(["auth", "verified"])->name("afspraken.delete");
 Route::post("/afspraken/create", [AppointmentController::class, "storeAppointment"]);
-
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
