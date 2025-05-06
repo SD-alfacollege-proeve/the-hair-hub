@@ -68,8 +68,6 @@ const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17']);
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
 
-};
-
 </script>
 
 <template>
