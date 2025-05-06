@@ -31,10 +31,10 @@ const email = ref('');
 const telefoon = ref('');
 
 const isNameValid = computed(() => naam.value.trim() !== '');
-const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));  // Basic email validation
-const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));  // Basic phone validation
+const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));  
+const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));  
 
-// Enable "Maak afspraak" button only if all fields are valid
+// Maak afspraak werkt alleen als alle velden zijn ingevuld
 const isSubmitEnabled = computed(() => isNameValid.value && isEmailValid.value && isPhoneValid.value);
 
 const volgendeStap = () => {
@@ -148,7 +148,7 @@ const submitAfspraak = () => {
             />
             <p v-if="!isEmailValid" class="text-sm text-red-600">Voer een geldig e-mailadres in.</p>
 
-            <label for="telefoon" class="block text-sm font-semibold text-gray-700 mt-4">Uw telefoonnummer</label>
+            <label for="telefoon" class="block text-sm font-semibold text-gray-700 mt-4">Voer een geldig telefoonnummer in.</label>
             <input
               v-model="telefoon"
               id="telefoon"
@@ -157,7 +157,7 @@ const submitAfspraak = () => {
               placeholder="Vul uw telefoonnummer in"
               required
             />
-            <p v-if="!isPhoneValid" class="text-sm text-red-600">Voer een geldig telefoonnummer in (10-15 cijfers).</p>
+            <p v-if="!isPhoneValid" class="text-sm text-red-600">Voer een geldig telefoonnummer in.</p>
           </div>
 
           <!-- Navigatie -->
