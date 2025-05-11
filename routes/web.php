@@ -47,6 +47,11 @@ Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->name('contact');
 
+Route::get('/invoices', function () {
+    return Inertia::render('Invoices');
+})->name('invoices');
+
+
 Route::post("/contact/store", function(StoreContactRequest $request){
     DB::table("contact")->insert([
         "name" => $request->name,

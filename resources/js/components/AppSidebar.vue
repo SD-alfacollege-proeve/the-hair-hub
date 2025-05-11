@@ -30,11 +30,11 @@ const mainNavItems: NavItem[] = [
                   href: '/employees',
                   icon: Users,
               },
-              {
+              /*{
                   title: 'Klanten',
                   href: '/customers',
                   icon: User,
-              },
+              },*/
 
               {
                 title: 'Facturen',
