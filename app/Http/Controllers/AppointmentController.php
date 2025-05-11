@@ -19,7 +19,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        $appointments = DB::table("appointments")->orderBy("appointment_date", "desc")->get();
+        $appointments = Appointment::orderBy('created_at', 'desc')->get();
         
         return Inertia::render('admin/Afspraken', [
             'appointments' => $appointments,

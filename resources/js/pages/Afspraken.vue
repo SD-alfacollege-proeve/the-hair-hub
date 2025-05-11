@@ -111,6 +111,7 @@ if (responseData?.errors) {
     console.error("Fout bij verzenden:", err);
   }
 }
+
 </script>
 
 <template>
@@ -205,7 +206,7 @@ if (responseData?.errors) {
             />
             <p v-if="!isEmailValid" class="text-sm text-red-600">Voer een geldig e-mailadres in.</p>
 
-            <label for="telefoon" class="block text-sm font-semibold text-gray-700 mt-4">Uw telefoonnummer</label>
+            <label for="telefoon" class="block text-sm font-semibold text-gray-700 mt-4">Voer een geldig telefoonnummer in.</label>
             <input
               v-model="telefoon"
               id="telefoon"
@@ -214,7 +215,7 @@ if (responseData?.errors) {
               placeholder="Vul uw telefoonnummer in"
               required
             />
-            <p v-if="!isPhoneValid" class="text-sm text-red-600">Voer een geldig telefoonnummer in (10-15 cijfers).</p>
+            <p v-if="!isPhoneValid" class="text-sm text-red-600">Voer een geldig telefoonnummer in.</p>
           </div>
 
           <!-- Navigatie -->

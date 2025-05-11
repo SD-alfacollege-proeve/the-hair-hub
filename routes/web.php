@@ -17,6 +17,8 @@ use Carbon\Carbon;
 Route::get('/', function () {
     return Inertia::render('Landing');
 })->name('home');
+
+
 Route::get('dashboard', function () {
     $appointments = Appointment::latest()->limit(5)->get();
     return Inertia::render('Dashboard', [
@@ -24,10 +26,13 @@ Route::get('dashboard', function () {
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::get('products', [ProductController::class, "index"])->name("products");
 
-Route::group(['middleware' => ['auth', 'verified']], function () {
+Route::group(['middleware' => ['auth']], function () {
     Route::get('employees', [\App\Http\Controllers\EmployeeController::class, 'index'])->name('employees');
+    Route::get('dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('owner', \App\Http\Controllers\OwnerController::class)->except(['show']);
 });
 
 Route::get('/store', function () {
@@ -85,6 +90,7 @@ Route::delete("/afspraken/delete/{appointment}", [AppointmentController::class, 
 Route::post("/afspraken/create", [AppointmentController::class, "storeAppointment"]);
 Route::get("/afspraken/edit/{appointment}", [AppointmentController::class, "edit"]);
 Route::put("/afspraken/update/{appointment}", [AppointmentController::class, "update"]);
+
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

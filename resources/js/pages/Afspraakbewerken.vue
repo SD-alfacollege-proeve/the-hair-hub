@@ -32,6 +32,7 @@ const tijd = ref(props.appointment.time);
 // For checkbox values (optional)
 const producten = ref<string[]>(props.appointment.producten || []);
 
+
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
 async function submitAfspraak(appointmentId) {

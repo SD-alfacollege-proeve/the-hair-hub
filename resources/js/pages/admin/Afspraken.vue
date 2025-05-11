@@ -49,6 +49,7 @@ const goToEditPage = (id: number) => {
   }
 };
 
+
 </script>
 
 <template>

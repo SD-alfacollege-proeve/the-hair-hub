@@ -52,18 +52,18 @@ const handleSubmit = async () => {
                         </h2>
                         <form @submit.prevent="handleSubmit" class="space-y-6">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-gray-700">Naam</label>
-                                <input v-model="name" type="text" id="name" required class="mt-1 block w-1/2 border-gray-300 shadow-sm ring rounded-md focus:border-purple-500 focus:ring focus:ring-purple-200 pl-2 h-8  " />
+                                <label for="naam" class="block text-sm font-semibold text-gray-700">Uw naam</label>
+                                <input v-model="name" type="text" id="name" required class=" p-3 border border-gray-300 rounded-md w-64 " />
                             </div>
 
                             <div>
                                 <label for="email" class="block text-sm font-medium text-gray-700">E-mailadres</label>
-                                <input v-model="email" type="email" id="email" required class="mt-1 block w-1/2 border-gray-300 shadow-sm ring rounded-md focus:border-purple-500 focus:ring focus:ring-purple-200 pl-2 h-8" />
+                                <input v-model="email" type="email" id="email" required class=" p-3 border border-gray-300 rounded-md w-64" />
                             </div>
 
                             <div>
                                 <label for="message" class="block text-sm font-medium text-gray-700">Bericht</label>
-                                <textarea v-model="message" id="message" rows="4" required class="mt-1 block w-1/2 border-gray-300 shadow-sm ring rounded-md focus:border-purple-500 focus:ring focus:ring-purple-200 pl-2"></textarea>
+                                <textarea v-model="message" id="message" rows="4" required class=" p-3 border border-gray-300 rounded-md w-64"></textarea>
                             </div>
 
                             <button type="submit" class="inline-flex items-center px-6 py-2 rounded-md bg-green-700 text-white hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-purple-500">

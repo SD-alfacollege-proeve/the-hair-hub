@@ -56,7 +56,7 @@ import { Head, Link } from '@inertiajs/vue3';
                         </div>
                         <div class="p-4">
                             <h3 class="mb-2 text-xl font-semibold text-gray-800">Knippen</h3>
-                            <p class="text-gray-600"></p>
+                            <p class="text-gray-600">Trendy en eigentijdse kapsels knippen.</p>
                         </div>
                     </div>
 
