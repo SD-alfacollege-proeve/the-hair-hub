@@ -2,20 +2,42 @@
 import FrontLayout from '@/layouts/FrontLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
-import axios from "axios"
+import axios from "axios";
 
-// Stap- en formulierbeheer
+const flashMessage = ref<string | null>(null);
+
+// Form state
 const stap = ref(1); 
-const werknemer = ref('');
-const behandeling = ref('');
+const werknemer = ref<number | null>(null);
+const behandeling = ref<number | null>(null);
 const datum = ref('');
 const tijd = ref('');
+const naam = ref('');
+const email = ref('');
+const telefoon = ref('');
 
-const werknemers = ref(['Lisa', 'Emma', 'Joost']);
-const behandelingen = ref(['Knippen', 'Stylen', 'Wassen']);
+const werknemers = ref([
+  { id: 1, name: "joost" },
+  { id: 2, name: "emma" },
+  { id: 3, name: "lisa" }
+]);
 
-const isStap1Voltooid = computed(() => werknemer.value !== '');
-const isStap2Voltooid = computed(() => behandeling.value !== '');
+const behandelingen = ref([
+  { id: 1, name: 'Knippen' },
+  { id: 2, name: 'Stylen' },
+  { id: 3, name: 'Wassen' }
+]);
+
+const uren = ref([
+  '09:00', '10:00', '11:00', '12:00',
+  '13:00', '14:00', '15:00', '16:00', '17:00'
+]);
+
+const Errors = ref<string[]>([]);
+
+// Validation
+const isStap1Voltooid = computed(() => werknemer.value !== null);
+const isStap2Voltooid = computed(() => behandeling.value !== null);
 const isStap3Voltooid = computed(() => datum.value !== '');
 const isStap4Voltooid = computed(() => tijd.value !== '');
 
@@ -27,17 +49,13 @@ const isVolgendeStapEnabled = computed(() => {
   return false;
 });
 
-const naam = ref('');
-const email = ref('');
-const telefoon = ref('');
-
 const isNameValid = computed(() => naam.value.trim() !== '');
-const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));  
-const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));  
+const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));
+const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));
 
-// Maak afspraak werkt alleen als alle velden zijn ingevuld
 const isSubmitEnabled = computed(() => isNameValid.value && isEmailValid.value && isPhoneValid.value);
 
+// Navigation
 const volgendeStap = () => {
   if (stap.value < 5) stap.value++;
 };
@@ -47,26 +65,52 @@ const vorigeStap = () => {
 };
 
 const resetVelden = () => {
-   console.log({
-  user_id: werknemer.key,
-  treatment_id: behandeling.key,
-  date: datum.value,
-  time: tijd.value,
-});
-  werknemer.value = '';
-  behandeling.value = '';
+  werknemer.value = null;
+  behandeling.value = null;
   datum.value = '';
   tijd.value = '';
   naam.value = '';
   email.value = '';
   telefoon.value = '';
   stap.value = 1;
- 
+  Errors.value = [];
 };
 
-const uren = ref(['9', '10', '11', '12', '13', '14', '15', '16', '17']);
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
+async function submitAfspraak() {
+  if (!isSubmitEnabled.value) return;
+  try {
+    await axios.post("/afspraken/create", {
+      user_id: werknemer.value,
+      treatment_id: behandeling.value,
+      date: datum.value,
+      time: tijd.value,
+      customer_name: naam.value,
+      email: email.value,
+      phone_number: telefoon.value,
+    }).then(response => {
+             flashMessage.value = response.data.message;
+             console.log(flashMessage)
+             setTimeout(() => {
+                window.location.href = "http://localhost/"
+              }, 3000);
+            })
+
+    resetVelden();
+  } catch (err: any) {
+    const responseData = err.response?.data;
+
+if (responseData?.errors) {
+  console.log(responseData?.errors)
+  Errors.value = Object.values(responseData.errors).flat();
+} else if (responseData?.message) {
+  
+  Errors.value = [responseData.message];
+}
+    console.error("Fout bij verzenden:", err);
+  }
+}
 
 </script>
 
@@ -87,24 +131,34 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
           Maak snel een afspraak voor jouw gewenste datum en tijd.
         </p>
 
+         
         <div class="max-w-3xl text-gray-700 space-y-6 text-base leading-relaxed">
-          <!-- Werknemer kiezen -->
+        <div v-if="Errors.length" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
+              <ul class="mt-2 list-disc list-inside">
+                <li v-for="(error, index) in Errors" :key="index">{{ error }}</li>
+              </ul>
+              
+            </div>
+             <div v-if="flashMessage" class="p-3 bg-green-200 text-green-800 rounded">
+                {{ flashMessage }}
+            </div>
+          <!-- Stap 1 -->
           <div v-if="stap === 1">
             <label for="werknemer" class="block text-sm font-semibold text-gray-700">Kies een werknemer</label>
             <select v-model="werknemer" id="werknemer" class="w-full p-3 border border-gray-300 rounded-md">
-              <option v-for="werknemer in werknemers" :key="werknemer" :value="werknemer">{{ werknemer }}</option>
+              <option v-for="werknemer in werknemers" :key="werknemer.id" :value="werknemer.id">{{ werknemer.name }}</option>
             </select>
           </div>
 
-          <!-- Behandeling kiezen -->
+          <!-- Stap 2 -->
           <div v-if="stap === 2">
             <label for="behandeling" class="block text-sm font-semibold text-gray-700">Kies een behandeling</label>
             <select v-model="behandeling" id="behandeling" class="w-full p-3 border border-gray-300 rounded-md">
-              <option v-for="behandeling in behandelingen" :key="behandeling" :value="behandeling">{{ behandeling }}</option>
+              <option v-for="behandeling in behandelingen" :key="behandeling.id" :value="behandeling.id">{{ behandeling.name }}</option>
             </select>
           </div>
 
-          <!-- Datum kiezen -->
+          <!-- Stap 3 -->
           <div v-if="stap === 3">
             <label for="datum" class="block text-sm font-semibold text-gray-700">Kies een datum</label>
             <input
@@ -118,16 +172,18 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
             />
           </div>
 
-          <!-- Tijd kiezen -->
+          <!-- Stap 4 -->
           <div v-if="stap === 4">
             <label for="tijd" class="block text-sm font-semibold text-gray-700">Kies een tijd</label>
             <select v-model="tijd" id="tijd" name="time" class="w-full p-3 border border-gray-300 rounded-md" required>
-              <option v-for="uur in uren" :key="uur" :value="uur">{{ uur }}:00</option>
+              <option v-for="uur in uren" :key="uur" :value="uur">{{ uur }}</option>
             </select>
           </div>
 
-          <!-- Stap 5: Gegevens invullen -->
+          <!-- Stap 5 -->
           <div v-if="stap === 5">
+            <!-- Error Box -->
+           
             <label for="naam" class="block text-sm font-semibold text-gray-700">Uw naam</label>
             <input
               v-model="naam"
@@ -181,9 +237,10 @@ const huidigeDatum = new Date().toISOString().split('T')[0];
               Volgende
             </button>
 
-            <!-- afspraak maken -->
             <button
-
+              v-if="stap === 5"
+              :disabled="!isSubmitEnabled"
+              @click="submitAfspraak"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
               Maak afspraak

@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Inertia\Inertia;
 use App\Http\Requests\StoreAppointmentRequest;
+use App\Http\Requests\UpdateAppointmentRequest;
 use App\Mail\SendAppointmentConfirmationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class AppointmentController extends Controller
 {
@@ -21,7 +23,6 @@ class AppointmentController extends Controller
         
         return Inertia::render('admin/Afspraken', [
             'appointments' => $appointments,
-            
         ]);
     }
 
@@ -40,19 +41,22 @@ class AppointmentController extends Controller
      */
     public function storeAppointment(StoreAppointmentRequest $request)
     {
-        
         $appointment = new Appointment();
         $appointment->customer_name = $request->customer_name;
         $appointment->email = $request->email;
         $appointment->phone_number = $request->phone_number;
+        $appointment->user_id = $request->user_id;
         $appointment->treatment_id = $request->treatment_id;
-        $appointment->datetime = $request->date . ' ' . $request->time;
-
-        
+        $appointment->appointment_date = Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time);
+    
         $appointment->save();
-        Mail::to($appointment->email)->send(new SendAppointmentConfirmationMail($request));
+        //Mail::to($appointment->email)->send(new SendAppointmentConfirmationMail($request));
         
-        return redirect()->with("message", "Afspraak is gemaakt!");
+        $message = "afspraak van  is succesvol aangemaakt. U krijgt een bevestigingsemail"; 
+        return response()->json([
+            "redirect" => true,
+            "message" => $message
+        ]);
 
     
     }
@@ -71,21 +75,32 @@ class AppointmentController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Appointment $appointment)
-    {
-        $appointment = Appointment::all()->find($appointment);
-        return Inertia::render("/appointments/edit", [$appointment]);
-    }
-
+{
+    [$date, $time] = explode(" ", $appointment->appointment_date);
+    return Inertia::render('Afspraakbewerken', [
+        'appointment' => [
+            'id' => $appointment->id,
+            'customer_name' => $appointment->customer_name,
+            'email' => $appointment->email,
+            'phone_number' => $appointment->phone_number,
+            "date" => $date,
+            "time" => $time, 
+            'behandeling' => $appointment->behandeling,
+            'producten' => $appointment->producten ?? [],
+        ]
+    ]);
+}
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreAppointmentRequest $request, Appointment $appointment)
+    public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
+        dd($appointment);
         $appointment->customer_name = $request->customer_name;
         $appointment->email = $request->email;
         $appointment->phone_number = $request->phone_number;
         $appointment->treatment_id = $request->treatment_id;
-        $appointment->datetime = $request->date . ' ' . $request->time;
+        $appointment->appointment_date = Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time);
 
         $appointment->update();
 
@@ -95,11 +110,15 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointment $id)
+    public function destroy(Appointment $appointment)
     {
-        $appointment = Appointment::all()->findOrFail($id);
+        $message = "De afspraak van " . $appointment->customer_name . "om " . $appointment->appointment_date . " is succesvol verwijderd"; 
+        $appointment = Appointment::all()->findOrFail($appointment);
         $appointment->delete();
         
-        return response()->json(['redirect' => '/afspraken']);
+        return response()->json([
+            "redirect" => "http://localhost/afspraak",
+            "message" => $message
+        ]);
     }
 }

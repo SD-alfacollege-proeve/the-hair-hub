@@ -49,9 +49,9 @@ class SendAppointmentConfirmationMail extends Mailable
      */
     public function content(): Content
     {
-        [$date, $time] = explode(' ', $this->datetime);
-        $treatment = Appointment::with("treatment")->find($this->treatment_id);
-        $user = Appointment::with("user")->find($this->user_id);
+        
+        //$treatment = Appointment::with("treatment")->find($this->treatment_id);
+        //$user = Appointment::with("user")->find($this->user_id);
 
         return new Content(
             html: `Bedankt voor uw reservering via onze website. Hierbij bevestigen wij dat uw afspraak succesvol is ontvangen en ingepland.</p><br> "
@@ -68,19 +68,19 @@ class SendAppointmentConfirmationMail extends Mailable
        </tr>
        <tr>
          <td><strong>Datum</strong></td>
-         <td>{$date}</td>
+         <td></td>
        </tr>
        <tr>
          <td><strong>Tijd</strong></td>
-         <td>{$time}</td>
+         <td></td>
        </tr>
        <tr>
          <td><strong>behandeling</strong></td>
-         <td>{$treatment->name}</td>
+         <td></td>
        </tr>
        <tr>
          <td><strong>kapper</strong></td>
-         <td>{$user->name}</td>
+         <td></td>
        </tr>
      </tbody>
    </table>`
@@ -93,5 +93,9 @@ class SendAppointmentConfirmationMail extends Mailable
     public function attachments(): array
     {
         return [];
+    }
+
+    public function build(){
+      return $this->view('emails.appointment'); // <- this must match the actual file location
     }
 }
