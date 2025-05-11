@@ -12,7 +12,15 @@ class OwnerController extends Controller
      */
     public function index()
     {
-        return Inertia::render('admin/Eigenaaresse');
+        return Inertia::render('admin/Eigenaaresse', [
+            'users' => \App\Models\User::all(),
+            'workshifts' => \App\Models\WorkShift::all(),
+            'workshiftsCount' => \App\Models\WorkShift::count(),
+            'appointments' => \App\Models\Appointment::all(),
+            'usersCount' => \App\Models\User::count(),
+            'lastFiveAppointments' => \App\Models\Appointment::orderBy('created_at', 'desc')->take(5)->get(),
+            'lastFiveAppointmentsCount' => \App\Models\Appointment::orderBy('created_at', 'desc')->take(5)->count(),
+        ]);
 
         /**
          * testrapport

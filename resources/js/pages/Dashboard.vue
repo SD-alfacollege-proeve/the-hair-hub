@@ -33,9 +33,9 @@ const isRole = (role: 'admin' | 'employee' | 'user') => {
 
 // Mock data for calendar
 const employees = [
-    { id: 1, name: 'Emma Johnson' },
-    { id: 2, name: 'Michael Chen' },
-    { id: 3, name: 'Sophia Garcia' }
+    { id: 1, name: 'Jan Jansen' },
+    { id: 2, name: 'Emma van Dijk' },
+    { id: 3, name: 'Sophie de Boer' },
 ];
 
 // Processed calendar appointments
