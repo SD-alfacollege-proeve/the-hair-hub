@@ -28,10 +28,7 @@ const behandelingen = ref([
   { id: 3, name: 'Wassen' }
 ]);
 
-const uren = ref([
-  '09:00', '10:00', '11:00', '12:00',
-  '13:00', '14:00', '15:00', '16:00', '17:00'
-]);
+const uren = ref(['09:00', '10:00', '11:00', '12:00','13:00', '14:00', '15:00', '16:00', '17:00']);
 
 const Errors = ref<string[]>([]);
 
@@ -79,7 +76,6 @@ const resetVelden = () => {
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
 async function submitAfspraak() {
-  if (!isSubmitEnabled.value) return;
   try {
     await axios.post("/afspraken/create", {
       user_id: werknemer.value,
@@ -94,7 +90,7 @@ async function submitAfspraak() {
              console.log(flashMessage)
              setTimeout(() => {
                 window.location.href = "http://localhost/"
-              }, 3000);
+              }, 4000);
             })
 
     resetVelden();
@@ -193,7 +189,7 @@ if (responseData?.errors) {
               placeholder="Vul uw naam in"
               required
             />
-            <p v-if="!isNameValid" class="text-sm text-red-600">Naam is verplicht.</p>
+           
 
             <label for="email" class="block text-sm font-semibold text-gray-700 mt-4">Uw e-mail</label>
             <input
@@ -204,7 +200,7 @@ if (responseData?.errors) {
               placeholder="Vul uw e-mail in"
               required
             />
-            <p v-if="!isEmailValid" class="text-sm text-red-600">Voer een geldig e-mailadres in.</p>
+            
 
             <label for="telefoon" class="block text-sm font-semibold text-gray-700 mt-4">Voer een geldig telefoonnummer in.</label>
             <input
@@ -215,7 +211,7 @@ if (responseData?.errors) {
               placeholder="Vul uw telefoonnummer in"
               required
             />
-            <p v-if="!isPhoneValid" class="text-sm text-red-600">Voer een geldig telefoonnummer in.</p>
+           
           </div>
 
           <!-- Navigatie -->
@@ -239,7 +235,7 @@ if (responseData?.errors) {
 
             <button
               v-if="stap === 5"
-              :disabled="!isSubmitEnabled"
+              
               @click="submitAfspraak"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >

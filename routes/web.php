@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Carbon\Carbon;
-
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendAppointmentConfirmationMail;
 
 
 Route::get('/', function () {
@@ -91,6 +91,12 @@ Route::post("/afspraken/create", [AppointmentController::class, "storeAppointmen
 Route::get("/afspraken/edit/{appointment}", [AppointmentController::class, "edit"]);
 Route::put("/afspraken/update/{appointment}", [AppointmentController::class, "update"]);
 
-
+Route::get("/emails", function(){
+    return view("emails");
+});
+Route::get('/send-test-mail', function () {
+    Mail::to('jansoniusjur@gmail.com')->send(new SendAppointmentConfirmationMail('Hello from Outlook SMTP!'));
+    return 'Email sent!';
+});
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

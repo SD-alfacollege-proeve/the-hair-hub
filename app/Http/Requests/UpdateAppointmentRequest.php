@@ -11,7 +11,7 @@ class UpdateAppointmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "customer_name" => ["required", "string", "min:3", "max:100"],
+            "customer_name" => ["required", "string", "min:2", "max:100"],
             "email" => ["required", "max:100", "email",],
             "phone_number" => 'required',
             "date" => "required",
@@ -37,13 +37,16 @@ class UpdateAppointmentRequest extends FormRequest
         return [
             "customer_name.required" => "Naam is verplicht",
             "customer_name.string" => "Naam mag geen cijfers bevatten",
-            "customer_name.min" => "Naam moet meer dan 3 cijfers bevatten",
+            "customer_name.min" => "Naam moet meer dan 2 karakters bevatten",
             "customer_name.max" => "Naam mag niet meer dan 100 karakters bevatten",
+
             "email.required" => "Email is verplicht",
             "email.max" => "Email mag niet meer dan 100 karakters bevatten",
             "email.email" => "Email moet een geldig email zijn",
             "email.unique" => "Email heeft al een afspraak gemaakt",
-            "phone_number.dutch-phone-number" => "Telefoonnummer moet een geldig nederlands telefoonnummer zijn",
+
+            "time.required" => "Kies een tijd",
+            "date.required" => "Kies een datum",
             "treatment_id.required" => "kies een behandeling",
             "user_id.required" => "kies een kapper"
         ];

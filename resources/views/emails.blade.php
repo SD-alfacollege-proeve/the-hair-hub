@@ -33,7 +33,7 @@
   <div class="container">
     <h1>Afspraak bevestigd</h1>
     <p>Beste {{ $name ?? 'klant' }},</p>
-
+    
     <p>Je afspraak is succesvol bevestigd.</p>
 
     <p><strong>Datum:</strong> {{ $date ?? 'Nog niet opgegeven' }}<br>

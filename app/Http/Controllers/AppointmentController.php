@@ -50,9 +50,9 @@ class AppointmentController extends Controller
         $appointment->appointment_date = Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time);
     
         $appointment->save();
-        //Mail::to($appointment->email)->send(new SendAppointmentConfirmationMail($request));
+        Mail::to($appointment->email)->send(new SendAppointmentConfirmationMail("dit is een test"));
         
-        $message = "afspraak van  is succesvol aangemaakt. U krijgt een bevestigingsemail"; 
+        $message = "afspraak van  is succesvol aangemaakt. U krijgt een bevestigingsemail. U wordt nu naar de homepagina gestuurd"; 
         return response()->json([
             "redirect" => true,
             "message" => $message
@@ -65,11 +65,7 @@ class AppointmentController extends Controller
      * Display the specified resource.
      */
 
-    public function show(string $id)
-    {
-        $appointment = Appointment::with("treatment")->find($id);
-        return Inertia::render("appointments/view", [$appointment]);
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -95,7 +91,6 @@ class AppointmentController extends Controller
      */
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
-        dd($appointment);
         $appointment->customer_name = $request->customer_name;
         $appointment->email = $request->email;
         $appointment->phone_number = $request->phone_number;
@@ -104,7 +99,11 @@ class AppointmentController extends Controller
 
         $appointment->update();
 
-        return redirect()->route("/appointments")->with("succes", "afspraak gewijzigd");
+        $message = "De afspraak van " . $appointment->customer_name . " van " . $appointment->appointment_date . " is succesvol gewijzigd";
+        return response()->json([
+            "redirect" => true,
+            "message" => $message
+        ]);
     }
 
     /**
@@ -112,12 +111,12 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        $message = "De afspraak van " . $appointment->customer_name . "om " . $appointment->appointment_date . " is succesvol verwijderd"; 
+        $message = "De afspraak van " . $appointment->customer_name . " om " . $appointment->appointment_date . " is succesvol verwijderd"; 
         $appointment = Appointment::all()->findOrFail($appointment);
         $appointment->delete();
         
         return response()->json([
-            "redirect" => "http://localhost/afspraak",
+            "redirect" => true,
             "message" => $message
         ]);
     }

@@ -51,7 +51,7 @@ const mainNavItems: NavItem[] = [
 
     {
         title: 'Afspraken',
-        href: '/appointments',
+        href: '/afspraken',
         icon: Calendar,
     },
 ];

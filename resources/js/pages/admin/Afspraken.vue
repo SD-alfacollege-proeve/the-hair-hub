@@ -16,7 +16,7 @@ function deleteAfspraak(appointment: number) {
              flashMessage.value = response.data.message;
            setTimeout(() => {
           window.location.reload();
-        }, 1500);
+        }, 2000);
         })
         .catch(err => {
           console.error('Verwijderen mislukt:', err.response || err);
