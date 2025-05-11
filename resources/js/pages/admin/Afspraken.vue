@@ -2,21 +2,27 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import axios from 'axios';
 
-const deleteAfspraak = async (id: number) => {
-  if (confirm("Weet je zeker dat je deze afspraak wilt verwijderen?")) {
-    try {
-      await axios.delete(`/afspraken/delete/${id}`);
-      if (response.data.redirect) {
-    window.location.href = response.data.redirect; // This will trigger a full page refresh
-}
-    } catch (err) {
-      console.error('Verwijderen mislukt:', err.response.data);
+const flashMessage = ref<string | null>(null);
+
+function deleteAfspraak(appointment: number) {
+      if (!confirm("Weet je zeker dat je deze afspraak wilt verwijderen?")) return;
+
+      axios.delete(`/afspraken/delete/${appointment}`)
+        .then(response => {
+             flashMessage.value = response.data.message;
+           setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+        })
+        .catch(err => {
+          console.error('Verwijderen mislukt:', err.response || err);
+        });
     }
-  }
-};
+  
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -35,6 +41,14 @@ const isRole = (role: 'admin' | 'appointment' | 'user') => {
     return page.props.auth?.roles?.includes(role);
 };
 
+const goToEditPage = (id: number) => {
+  try {
+    router.visit(`/afspraken/edit/${id}`);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 </script>
 
 <template>
@@ -42,6 +56,10 @@ const isRole = (role: 'admin' | 'appointment' | 'user') => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
+            <div v-if="flashMessage" class="p-3 bg-green-200 text-green-800 rounded">
+                {{ flashMessage }}
+            </div>
+        
             <div class="grid auto-rows-min gap-4 md:grid-cols-3">
                 
             </div>
@@ -71,10 +89,10 @@ const isRole = (role: 'admin' | 'appointment' | 'user') => {
                                     <td class="px-4 py-3">{{ appointment.appointment_date }}</td>
                                     <td class="px-4 py-3">
                                         <div class="flex gap-2">
-                                            <button class="rounded bg-blue-500/20 px-2 py-1 text-xs text-blue-400 hover:bg-blue-500/30">
+                                            <button  @click="goToEditPage(appointment.id)" class="rounded bg-blue-500/20 px-2 py-1 text-xs text-blue-400 hover:bg-blue-500/30" >
                                                 Bewerken
                                             </button>
-                                            <button  @click="deleteAfspraak(appointment.id)" class="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400 hover:bg-red-500/30" onclick="return confirm(weet je zeker dat je de afspraak van {{ appointment.customer_name }} om {{ appointment.appointment_date }} wilt verwijderen?)">
+                                            <button  @click="deleteAfspraak(appointment.id)" class="rounded bg-red-500/20 px-2 py-1 text-xs text-red-400 hover:bg-red-500/30">
                                                 Verwijderen
                                             </button>
                                         </div>

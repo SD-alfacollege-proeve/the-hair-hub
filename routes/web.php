@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Requests\StoreContactRequest;
+use App\Models\Appointment;
 use App\Models\Contact;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,10 @@ Route::get('/', function () {
     return Inertia::render('Landing');
 })->name('home');
 Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
+    $appointments = Appointment::latest()->limit(5)->get();
+    return Inertia::render('Dashboard', [
+        "appointments" => $appointments
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('products', [ProductController::class, "index"])->name("products");
@@ -64,7 +68,7 @@ Route::get('/cookiebeleid', function () {
     return Inertia::render('Cookiebeleid');
 })->name('cookiebeleid');
 
-Route::get('/afspraken', function () {
+Route::get('/maak-afspraak', function () {
     return Inertia::render('Afspraken');
 })->name('afspraken');
 
@@ -76,10 +80,11 @@ Route::get('invoices', function () {
     return Inertia::render('Invoices');
 })->middleware(['auth', 'verified'])->name('invoices');
 
-Route::get('appointments', [AppointmentController::class, "index"])->middleware(["auth", "verified"]);
-Route::delete("/afspraken/delete/{id}", [AppointmentController::class, "destroy"])->middleware(["auth", "verified"])->name("afspraken.delete");
+Route::get('/afspraken', [AppointmentController::class, "index"])->middleware(["auth", "verified"]);
+Route::delete("/afspraken/delete/{appointment}", [AppointmentController::class, "destroy"])->middleware(["auth", "verified"])->name("afspraken.delete");
 Route::post("/afspraken/create", [AppointmentController::class, "storeAppointment"]);
-
+Route::get("/afspraken/edit/{appointment}", [AppointmentController::class, "edit"]);
+Route::put("/afspraken/update/{appointment}", [AppointmentController::class, "update"]);
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';

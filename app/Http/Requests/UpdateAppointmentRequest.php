@@ -3,16 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreAppointmentRequest extends FormRequest
+class UpdateAppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,8 +23,8 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             "customer_name" => ["required", "string", "min:3", "max:100"],
-            "email" => ["required", "max:100", "email", "unique:appointments,email"],
-            "phone_number" => ['required', "unique:appointments,phone_number"],
+            "email" => ["required", "max:100", "email",],
+            "phone_number" => 'required',
             "date" => "required",
             "time" => "required",
             "user_id" => "required",
@@ -40,14 +39,13 @@ class StoreAppointmentRequest extends FormRequest
             "customer_name.string" => "Naam mag geen cijfers bevatten",
             "customer_name.min" => "Naam moet meer dan 3 cijfers bevatten",
             "customer_name.max" => "Naam mag niet meer dan 100 karakters bevatten",
-
             "email.required" => "Email is verplicht",
             "email.max" => "Email mag niet meer dan 100 karakters bevatten",
             "email.email" => "Email moet een geldig email zijn",
             "email.unique" => "Email heeft al een afspraak gemaakt",
-
-            "phone_number.unique" => "Telefoonnummer heeft al een afspraak gemaakt",
-
+            "phone_number.dutch-phone-number" => "Telefoonnummer moet een geldig nederlands telefoonnummer zijn",
+            "treatment_id.required" => "kies een behandeling",
+            "user_id.required" => "kies een kapper"
         ];
     }
 }

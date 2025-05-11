@@ -2,27 +2,40 @@
 import FrontLayout from '@/layouts/FrontLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
-import axios from "axios"
+import axios from "axios";
 
-// Stap- en formulierbeheer
+const flashMessage = ref<string | null>(null);
+
+// Form state
 const stap = ref(1); 
 const werknemer = ref<number | null>(null);
 const behandeling = ref<number | null>(null);
 const datum = ref('');
-const uren = ref(['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00']);
+const tijd = ref('');
+const naam = ref('');
+const email = ref('');
+const telefoon = ref('');
 
 const werknemers = ref([
-  {id: 1, name: "joost"},
-  {id:2, name: "emma"},
-  {id:3, name: "lisa"}
-]
-);
-const behandelingen = ref([
-  {id:1, name: 'Knippen'},
-  {id:2, name: 'Stylen'},
-  {id:3, name: 'Wassen'}
-  ]);
+  { id: 1, name: "joost" },
+  { id: 2, name: "emma" },
+  { id: 3, name: "lisa" }
+]);
 
+const behandelingen = ref([
+  { id: 1, name: 'Knippen' },
+  { id: 2, name: 'Stylen' },
+  { id: 3, name: 'Wassen' }
+]);
+
+const uren = ref([
+  '09:00', '10:00', '11:00', '12:00',
+  '13:00', '14:00', '15:00', '16:00', '17:00'
+]);
+
+const Errors = ref<string[]>([]);
+
+// Validation
 const isStap1Voltooid = computed(() => werknemer.value !== null);
 const isStap2Voltooid = computed(() => behandeling.value !== null);
 const isStap3Voltooid = computed(() => datum.value !== '');
@@ -36,17 +49,13 @@ const isVolgendeStapEnabled = computed(() => {
   return false;
 });
 
-const naam = ref('');
-const email = ref('');
-const telefoon = ref('');
-
 const isNameValid = computed(() => naam.value.trim() !== '');
-const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));  // Basic email validation
-const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));  // Basic phone validation
+const isEmailValid = computed(() => /\S+@\S+\.\S+/.test(email.value));
+const isPhoneValid = computed(() => /^[0-9]{10,15}$/.test(telefoon.value));
 
-// Enable "Maak afspraak" button only if all fields are valid
 const isSubmitEnabled = computed(() => isNameValid.value && isEmailValid.value && isPhoneValid.value);
 
+// Navigation
 const volgendeStap = () => {
   if (stap.value < 5) stap.value++;
 };
@@ -56,28 +65,21 @@ const vorigeStap = () => {
 };
 
 const resetVelden = () => {
-   console.log({
-  user_id: werknemer.key,
-  treatment_id: behandeling.key,
-  date: datum.value,
-  time: tijd.value,
-});
-  werknemer.value = '';
-  behandeling.value = '';
+  werknemer.value = null;
+  behandeling.value = null;
   datum.value = '';
   tijd.value = '';
   naam.value = '';
   email.value = '';
   telefoon.value = '';
   stap.value = 1;
- 
+  Errors.value = [];
 };
 
 const huidigeDatum = new Date().toISOString().split('T')[0];
 
 async function submitAfspraak() {
   if (!isSubmitEnabled.value) return;
-
   try {
     await axios.post("/afspraken/create", {
       user_id: werknemer.value,
@@ -87,20 +89,28 @@ async function submitAfspraak() {
       customer_name: naam.value,
       email: email.value,
       phone_number: telefoon.value,
-    });
+    }).then(response => {
+             flashMessage.value = response.data.message;
+             console.log(flashMessage)
+             setTimeout(() => {
+                window.location.href = "http://localhost/"
+              }, 3000);
+            })
 
-    // Reset after successful post
     resetVelden();
   } catch (err: any) {
-    console.error("Fout bij verzenden:", err.response?.data || err.message);
+    const responseData = err.response?.data;
+
+if (responseData?.errors) {
+  console.log(responseData?.errors)
+  Errors.value = Object.values(responseData.errors).flat();
+} else if (responseData?.message) {
+  
+  Errors.value = [responseData.message];
+}
+    console.error("Fout bij verzenden:", err);
   }
 }
-
-  
-
-
-
-
 </script>
 
 <template>
@@ -120,8 +130,18 @@ async function submitAfspraak() {
           Maak snel een afspraak voor jouw gewenste datum en tijd.
         </p>
 
+         
         <div class="max-w-3xl text-gray-700 space-y-6 text-base leading-relaxed">
-          <!-- Werknemer kiezen -->
+        <div v-if="Errors.length" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6">
+              <ul class="mt-2 list-disc list-inside">
+                <li v-for="(error, index) in Errors" :key="index">{{ error }}</li>
+              </ul>
+              
+            </div>
+             <div v-if="flashMessage" class="p-3 bg-green-200 text-green-800 rounded">
+                {{ flashMessage }}
+            </div>
+          <!-- Stap 1 -->
           <div v-if="stap === 1">
             <label for="werknemer" class="block text-sm font-semibold text-gray-700">Kies een werknemer</label>
             <select v-model="werknemer" id="werknemer" class="w-full p-3 border border-gray-300 rounded-md">
@@ -129,7 +149,7 @@ async function submitAfspraak() {
             </select>
           </div>
 
-          <!-- Behandeling kiezen -->
+          <!-- Stap 2 -->
           <div v-if="stap === 2">
             <label for="behandeling" class="block text-sm font-semibold text-gray-700">Kies een behandeling</label>
             <select v-model="behandeling" id="behandeling" class="w-full p-3 border border-gray-300 rounded-md">
@@ -137,7 +157,7 @@ async function submitAfspraak() {
             </select>
           </div>
 
-          <!-- Datum kiezen -->
+          <!-- Stap 3 -->
           <div v-if="stap === 3">
             <label for="datum" class="block text-sm font-semibold text-gray-700">Kies een datum</label>
             <input
@@ -151,7 +171,7 @@ async function submitAfspraak() {
             />
           </div>
 
-          <!-- Tijd kiezen -->
+          <!-- Stap 4 -->
           <div v-if="stap === 4">
             <label for="tijd" class="block text-sm font-semibold text-gray-700">Kies een tijd</label>
             <select v-model="tijd" id="tijd" name="time" class="w-full p-3 border border-gray-300 rounded-md" required>
@@ -159,8 +179,10 @@ async function submitAfspraak() {
             </select>
           </div>
 
-          <!-- Stap 5: Gegevens invullen -->
+          <!-- Stap 5 -->
           <div v-if="stap === 5">
+            <!-- Error Box -->
+           
             <label for="naam" class="block text-sm font-semibold text-gray-700">Uw naam</label>
             <input
               v-model="naam"
@@ -214,9 +236,10 @@ async function submitAfspraak() {
               Volgende
             </button>
 
-            <!-- afspraak maken -->
             <button
-              @click="submitAfspraak()"
+              v-if="stap === 5"
+              :disabled="!isSubmitEnabled"
+              @click="submitAfspraak"
               class="py-2 px-4 text-white bg-green-700 rounded-md hover:bg-green-600"
             >
               Maak afspraak

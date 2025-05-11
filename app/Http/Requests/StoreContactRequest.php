@@ -27,4 +27,6 @@ class StoreContactRequest extends FormRequest
             'message' => 'required|string|max:1000',
         ];
     }
+
+    
 }
