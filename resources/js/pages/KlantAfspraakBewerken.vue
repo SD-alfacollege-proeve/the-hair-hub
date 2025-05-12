@@ -35,10 +35,22 @@ const tijd = ref(props.appointment.time.slice(0, 5));
 const werknemers = props.appointment.employees
 console.log(tijd.value)
 
-
-const producten = ref<string[]>(props.appointment.producten || []);
-
 const huidigeDatum = new Date().toISOString().split('T')[0];
+
+function deleteAfspraak(appointment: number) {
+      if (!confirm("Weet je zeker dat je deze afspraak wilt verwijderen?")) return;
+
+      axios.delete(`/afspraken/klant/delete/${appointment}`)
+        .then(response => {
+             flashMessage.value = response.data.message;
+           setTimeout(() => {
+          window.location.href = "http://localhost";
+        }, 2000);
+        })
+        .catch(err => {
+          console.error('Verwijderen mislukt:', err.response || err);
+        });
+    }
 
 async function submitAfspraak(appointment) {
   
@@ -149,33 +161,6 @@ async function submitAfspraak(appointment) {
             />
         </div>
   
-        <!-- Producten toevoegen -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700">Selecteer producten</label>
-          <div class="space-y-2">
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="shampoo" class="form-checkbox" />
-              <label for="shampoo" class="text-sm">Shampoo</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="haarmasker" class="form-checkbox" />
-              <label for="haarmasker" class="text-sm">Haarverf</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="conditioner" class="form-checkbox" />
-              <label for="conditioner" class="text-sm">Conditioner</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="haargel" class="form-checkbox" />
-              <label for="haargel" class="text-sm">Haarlak</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="haarolie" class="form-checkbox" />
-              <label for="haarolie" class="text-sm">Haarolie</label>
-            </div>
-          </div>
-        </div>
-
           
       <div>
          <label for="naam" class="block text-sm font-semibold text-gray-700">Uw naam</label>
@@ -218,7 +203,13 @@ async function submitAfspraak(appointment) {
           </div>
 
         <!-- Submit Button -->
-        <div class="mt-6 flex justify-end">
+        <div class="mt-6 flex justify-end ">
+        <button
+            @click="deleteAfspraak(appointment.id)"
+            class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 mx-4"
+          >
+            Verwijder afspraak
+          </button>
           <button
             @click="submitAfspraak(appointment.id)"
             class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-500"

@@ -22,7 +22,7 @@ class AppointmentFactory extends Factory
            "phone_number" => preg_replace('/\D/', '', fake()->phoneNumber()),
            "appointment_date" => fake()->dateTimeBetween("-4 weeks"),
            "user_id" => random_int(1,2),
-           "treatment_id" => random_int(1,10),
+           "treatment_id" => random_int(1,5),
         ];
     }
 }

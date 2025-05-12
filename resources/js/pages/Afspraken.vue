@@ -16,17 +16,21 @@ const naam = ref('');
 const email = ref('');
 const telefoon = ref('');
 
-const werknemers = ref([
-  { id: 1, name: "joost" },
-  { id: 2, name: "emma" },
-  { id: 3, name: "lisa" }
-]);
+const props = defineProps<{
+  employees: {
+    id: number;
+    name: string;
+  },
 
-const behandelingen = ref([
-  { id: 1, name: 'Knippen' },
-  { id: 2, name: 'Stylen' },
-  { id: 3, name: 'Wassen' }
-]);
+  treatments: {
+    id: number,
+    name: string
+  }
+}>();
+
+const werknemers = props.employees
+const behandelingen = props.treatments
+console.log(werknemers)
 
 const uren = ref(['09:00', '10:00', '11:00', '12:00','13:00', '14:00', '15:00', '16:00', '17:00']);
 
@@ -90,7 +94,7 @@ async function submitAfspraak() {
              console.log(flashMessage)
              setTimeout(() => {
                 window.location.href = "http://localhost/"
-              }, 4000);
+              }, 6000);
             })
 
     resetVelden();
@@ -113,6 +117,7 @@ if (responseData?.errors) {
 <template>
   <FrontLayout>
     <Head title="Afspraken - Haircare Shop">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <link rel="preconnect" href="https://rsms.me/" />
       <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>

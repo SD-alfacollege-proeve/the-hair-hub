@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
+            WorkShiftSeeder::class,
             TreatmentSeeder::class,
             AppointmentSeeder::class,
-            WorkShiftSeeder::class
         ]);
 
     }
