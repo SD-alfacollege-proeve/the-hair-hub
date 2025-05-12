@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Database\Factories\TreatmentFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Factories\TreatmentFactory;
+use Illuminate\Support\Facades\DB;
 
 class TreatmentSeeder extends Seeder
 {
@@ -13,6 +14,46 @@ class TreatmentSeeder extends Seeder
      */
     public function run(): void
     {
-        TreatmentFactory::new()->count(10)->create();
+        DB::table("treatments")->insert([
+            [
+                "name" => "Haarstylen en wassen",
+                "description" => fake()->paragraph,
+                "thumbnail" => fake()->image,
+                "duration" => fake()->randomFloat(2,0,2),
+            ],
+
+             [
+                "name" => "Hoofd- en Hoofdhuidmassage",
+                "description" => fake()->paragraph,
+                "thumbnail" => fake()->image,
+                "duration" => fake()->randomFloat(2,0,2),
+            ],
+
+             [
+                "name" => "Ontspannende Warme Doek Behandeling",
+                "description" => fake()->paragraph,
+                "thumbnail" => fake()->image,
+                "duration" => fake()->randomFloat(2,0,2),
+            ],
+            [
+                "name" => "blonderen",
+                "description" => fake()->paragraph,
+                "thumbnail" => fake()->image,
+                "duration" => fake()->randomFloat(2,0,2),
+            ],
+            [
+                "name" => "Gezichtsbehandeling",
+                "description" => fake()->paragraph,
+                "thumbnail" => fake()->image,
+                "duration" => fake()->randomFloat(2,0,2),
+            ],
+            [
+                 "name" => "Wenkbrauwen Epileren / Verven",
+                 "description" => fake()->paragraph,
+                 "thumbnail" => fake()->image,
+                 "duration" => fake()->randomFloat(2,0,2),
+            ]
+                        
+        ]);
     }
 }

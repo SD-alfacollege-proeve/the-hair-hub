@@ -2,9 +2,8 @@
 
 namespace App\Mail;
 
-use App\Http\Requests\StoreAppointmentRequest;
-use App\Models\Appointment;
 use App\Models\Treatment;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -18,18 +17,19 @@ class SendAppointmentConfirmationMail extends Mailable
     public string $customer_name;
     public string $email;
     public string $phone_number;
-    public $treatment_id;
-    public $datetime;
-    public $user_id;
+    public string $appointment_date;
+    public int $treatment_id;
+    public int $user_id;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(StoreAppointmentRequest $request)
+    public function __construct($request)
     {
         $this->customer_name = $request->customer_name;
         $this->email = $request->email;
         $this->phone_number = $request->phone_number;
-        $this->datetime = $request->date . '-' . $request->time;
+        $this->appointment_date = $request->date . ' ' . $request->time;
         $this->treatment_id = $request->treatment_id;
         $this->user_id = $request->user_id;
     }
@@ -40,7 +40,7 @@ class SendAppointmentConfirmationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "Bevestiging knipafspraak voor {$this->datetime}"
+            subject: "Bevestiging knipafspraak op {$this->appointment_date}"
         );
     }
 
@@ -49,41 +49,22 @@ class SendAppointmentConfirmationMail extends Mailable
      */
     public function content(): Content
     {
+        [$date, $time] = explode(" ", $this->appointment_date);
+        $treatment = Treatment::findOrFail($this->treatment_id);
+        $barber = User::findOrFail($this->user_id);
         
-        //$treatment = Appointment::with("treatment")->find($this->treatment_id);
-        //$user = Appointment::with("user")->find($this->user_id);
-
         return new Content(
-            html: `Bedankt voor uw reservering via onze website. Hierbij bevestigen wij dat uw afspraak succesvol is ontvangen en ingepland.</p><br> "
-            <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; font-family: Arial, sans-serif;">
-     <thead>
-       <tr>
-         <th colspan="2">Reserveringsgegevens</th>
-       </tr>
-     </thead>
-     <tbody>
-       <tr>
-         <td><strong>Naam</strong></td>
-         <td>{$this->customer_name}</td>
-       </tr>
-       <tr>
-         <td><strong>Datum</strong></td>
-         <td></td>
-       </tr>
-       <tr>
-         <td><strong>Tijd</strong></td>
-         <td></td>
-       </tr>
-       <tr>
-         <td><strong>behandeling</strong></td>
-         <td></td>
-       </tr>
-       <tr>
-         <td><strong>kapper</strong></td>
-         <td></td>
-       </tr>
-     </tbody>
-   </table>`
+            view: "emails",
+            with: [
+                "customer_name" => $this->customer_name,
+                "email" => $this->email,
+                "phone_number" => $this->phone_number,
+                "date" => $date,
+                "time" => $time,
+                "treatment" => $treatment->name,
+                "barber" => $barber->name
+            ]
+
         );
     }
 
@@ -93,9 +74,5 @@ class SendAppointmentConfirmationMail extends Mailable
     public function attachments(): array
     {
         return [];
-    }
-
-    public function build(){
-      return $this->view('emails.appointment'); // <- this must match the actual file location
     }
 }

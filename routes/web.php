@@ -1,15 +1,22 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Requests\StoreContactRequest;
+use App\Mail\SendAppointmentConfirmationMail;
 use App\Models\Appointment;
 use App\Models\Contact;
+use App\Models\Treatment;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Carbon\Carbon;
+
 
 
 
@@ -45,9 +52,31 @@ Route::get('/afspraakbewerken', function () {
 })->name('afspraakbewerken');
 
 
-Route::get('/klantafspraak', function () {
-    return Inertia::render('Klantafspraak');
+
+
+Route::get('/afspraak/bewerken/{email}', function ($email) {
+    $decodedEmail = urldecode($email);
+    $appointment = Appointment::where("email", $email)->first();
+    $employees = User::role('employee')->get();
+    $treatments = Treatment::all();
+    [$date, $time] = explode(" ", $appointment->appointment_date);
+    return Inertia::render('KlantAfspraakBewerken', [
+        "appointment" => [
+            "id" => $appointment->id,
+            "customer_name" => $appointment->customer_name,
+            "email" => $appointment->email,
+            "phone_number" => $appointment->phone_number,
+            "date" => $date,
+            "time" => $time, 
+            "pickedTreatment" => Treatment::findOrFail($appointment->treatment_id),
+            "pickedBarber" => User::findOrFail($appointment->user_id),
+            "treatments" => $treatments,
+            "employees" => $employees    
+        ],
+    ]);
+    
 })->name('klantafspraak');
+
 
 Route::get('/privacybeleid', function () {
     return Inertia::render('Privacybeleid');
@@ -79,7 +108,11 @@ Route::get('/cookiebeleid', function () {
 })->name('cookiebeleid');
 
 Route::get('/maak-afspraak', function () {
-    return Inertia::render('Afspraken');
+    return Inertia::render('Afspraken', [
+        "employees" => User::role('employee')->get(),
+        "treatments" => Treatment::all(),
+    ]);
+
 })->name('afspraken');
 
 Route::get('customers', function () {
@@ -96,6 +129,11 @@ Route::post("/afspraken/create", [AppointmentController::class, "storeAppointmen
 Route::get("/afspraken/edit/{appointment}", [AppointmentController::class, "edit"]);
 Route::put("/afspraken/update/{appointment}", [AppointmentController::class, "update"]);
 
+Route::delete("/afspraken/klant/delete/{appointment}", [AppointmentController::class, "guestDeleteAppointment"])->middleware("guest");
+
+Route::get("/emails", function(){
+    return view("emails");
+});
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
